@@ -1,0 +1,39 @@
+<script type="text/html" data-template-name="tfjs-my_node-node">
+<div class="form-row">
+    <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+    <input type="text" id="node-input-name" placeholder="Name">
+</div>
+<div class="form-row">
+        <label for="node-input-modelUrl"><i class="fa fa-globe"></i> Model Url</label>
+        <input type="text" id="node-input-modelUrl" 
+                  placeholder="https://modelurl/model.json">
+</div>
+</script>
+
+
+
+<script type="text/javascript">
+RED.nodes.registerType('tfjs-my_node-node', {
+    category: 'machine learning',
+    defaults: {
+    name: { value: 'tfjs my_node' },
+    modelUrl: { value: 'ciao' },
+    fromHub: { value: 'checked' }
+    },
+    inputs: 1,
+    outputs: 1,
+    paletteLabel: 'tfjs my_node',
+    color: '#ff9100',
+    label: function() {
+    return this.name || 'tfjs my_node';
+    }
+});
+</script>
+
+
+
+<script type="text/html" data-help-name="tfjs-my_node-node">
+    <p>Testo di prova</p>
+    <p>Testo di  <strong>PROVA</strong> ciao ciao</p>
+    <p>Testo di prova</p>
+</script>

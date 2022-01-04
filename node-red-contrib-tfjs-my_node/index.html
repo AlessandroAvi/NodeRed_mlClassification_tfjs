@@ -1,0 +1,39 @@
+<!-- HERE IS DEFINED THE CUSTOM NODE APPEARANCE -->
+
+<!-- Define the node edit dialog in node red -->
+<script type="text/html" data-template-name="tfjs-my_node-node">
+  <div class="form-row">
+      <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+      <input type="text" id="node-input-name" placeholder="Name">
+  </div>
+  <div class="form-row">
+      <label for="node-input-modelUrl"><i class="fa fa-globe"></i> Model Url</label>
+      <input type="text" id="node-input-modelUrl" placeholder="https://modelurl/model.json">
+  </div>
+</script>
+
+
+<!-- Script tag for registwring the node with the editor -->
+<script type="text/javascript">
+    RED.nodes.registerType('tfjs-my_node-node', {
+        category: 'machine learning',
+        defaults: {
+        name: { value: 'tfjs my_node' }
+        },
+        inputs: 1,
+        outputs: 1,
+        paletteLabel: 'tfjs my_node',
+        color: '#ff9100',
+        label: function() {
+            return this.name || 'tfjs my_node';
+        }
+    });
+</script>
+
+
+<!-- Here is defined the info message for the node -->
+<script type="text/html" data-help-name="tfjs-my_node-node">
+    <p>A node based on TensorfFlow.js to run classifications on images for mask detections.</p>
+    <p>Provide to the node an image buffer and it will predict if the image contains a mask or nots</p>
+    <p>For more informations go to: https://github.com/AlessandroAvi/Node_red_tfjs_classification</p>
+</script>

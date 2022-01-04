@@ -1,0 +1,9 @@
+{
+  "version": "v1",
+  "packages": {
+    "node-red-contrib-tfjs-my_node": {
+      "signature": "c0974cb475f13d42d2a43f00feec9661",
+      "file": true
+    }
+  }
+}

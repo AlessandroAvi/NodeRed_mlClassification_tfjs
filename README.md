@@ -55,12 +55,14 @@ In the file the conversion is performed in just one line, where you have to spec
 In order to deploy the model in the node it's enough to load it in a GitHub repository and at runtime specify the link in the informations of the custom node. Another possibility is to load the json file locally in a folder in the laprop and specify the path to that file. 
 Note that in this case it has been decided to use the model.json loaded on this GitHub repository, and it's necessary to give to the model the raw link to the file. In the case of the model for the mask/no mask classification the link is the following [link to the model](https://raw.githubusercontent.com/AlessandroAvi/Node_red_tfjs_classification/main/Saved_model/Mask_classificator/converted_model/model.json). 
 
-<img src="https://github.com/AlessandroAvi/Node_red_tfjs_classification/blob/main/Img/install.gif" alt="Installation of the node" width="1000" height="300">
-
 ### Install the node and run it
 In order to install the custom node in node-red and run it only two commands from the terminal are required.
 Open the terminal and move inside the folder of the custom node. Here type `yalc publish`.
 Then, again in the terminal, move in the folder in which nide-red is installed (in windows installation it should be: User/NameOfUser/.node-red, on ubuntu it should be: cd ~/.node-red/ ) and here type the command `yalc add name-of-the-node`. In this case the name of the node is `node-red-contrib-tfjs-my_node`.
 Once done this it's enough to run the node-red command, insert the node in the flow, connect it to a debug node and an inert image node and give to it the image that youw ant to classify.
+
+<img src="https://github.com/AlessandroAvi/Node_red_tfjs_classification/blob/main/Img/install.gif" alt="Installation of the node" width="1000" height="300">
+
+
 NOTE: if at the first try of prediction an error appears in the debug tab, simply remove the node, deploy everything, re insert the node and deploy again averything. This procedure works almost every time.
 

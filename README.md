@@ -7,6 +7,8 @@ The project result is the following:
 
 <img src="https://github.com/AlessandroAvi/Node_red_tfjs_classification/blob/main/Img/example.gif" alt="My Project GIF" width="1000" height="500">
 
+Here is a closer image of the prediction:
+
 ![Prediction](https://github.com/AlessandroAvi/Node_red_tfjs_classification/blob/main/Img/prediction.jpg)
 
 

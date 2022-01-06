@@ -5,7 +5,7 @@ The entire project has been developed on a virtual machine that mount a ubuntu O
 
 The project result is the following:
 
-INSERIRE GIF O QUALCOSA CHE MOSTRA RISULTATO
+<img src="https://github.com/AlessandroAvi/Node_red_tfjs_classification/Img/example.gif" alt="My Project GIF" width="500" height="600">
 
 ## Project procedure
 The project is about the application of machine learning on node-red, a flow based developement tool for visual programming. The aim of the project was to develope a node that once taken an image in input is able to classify it and define if the image contains a mask or not. The idea comes from [this tutorial](https://developer.ibm.com/tutorials/building-a-machine-learning-node-for-node-red-using-tensorflowjs/) developed by Paul Van Eck at IBM, whom also posted a video tutorial explaining the project [here](https://www.youtube.com/watch?v=bOdlPwWej98&t=0s).  
@@ -25,7 +25,7 @@ For the project is required the installation of an IDE, node.js, node-red and so
 For the installation of node.js (see [here](https://nodered.org/docs/getting-started/windows#1-install-nodejs) ) it is recommended to use the version 14.x from their official [download page](https://nodejs.org/en/) .
 For the installation of node-red it should be enough to use the commands in the terminal `npm install -g --unsafe-perm node-red`
 For the correct usage of my node and the node developed in the tutorial is also necessary to install soem node-red packages. I had lots of problems installing these because of inexperience, so I suggest following these steps.
-Firstly install the package  @tensorflow/tfjs-node, from which other two package depend. To do this open the terminal and navigate inside the node-red folder (in my windows installation is in  User/NameOfUser/.node-red ) and run here the installing command by typing `npm install @tensorflow/tfjs-node` or use the `yarn` command as shown in [this page](https://www.npmjs.com/package/@tensorflow/tfjs-node). 
+Firstly install the package  @tensorflow/tfjs-node, from which other two package depend. To do this open the terminal and navigate inside the node-red folder (in windows installation it should be: User/NameOfUser/.node-red, on ubuntu it should be:  ~/.node-red/ ) and run here the installing command by typing `npm install @tensorflow/tfjs-node` or use the `yarn` command as shown in [this page](https://www.npmjs.com/package/@tensorflow/tfjs-node). 
 After this it should be easy to install the packages `node-red-contrib-tf-function` and `node-red-contrib-tf-model`. This time I isntalled those directly inside node-red. So type `node-red` in the terminal, open the node-red page on the browser an in the top right go to ...->...->... and in install enter the names of the two packages and install them. Additionally in here add the package `qualcosa-per-immagini`,  `node-red-contrib-browser-utils`.
 
 
@@ -35,6 +35,7 @@ For the creation of teh node follow the tutorial by IBM, that I also followed st
 ### Find/create a dataset for the model training
 In my case I had to find a dataset that contains lots of images of people with and without masks. At the beginning I created a small dataset of 60 images using my webcam just for becoming confident with the training of the model and perform fast trainings. Later I found on the internet these two dataset that I merged together. [Dataset_1](https://www.kaggle.com/omkargurav/face-mask-dataset) - [Dataset_2](https://www.kaggle.com/dhruvmak/face-mask-detection). 
 In order to be able to use these images in the training I need to have all the images resized to a shape of 224x224 pixels. I did this using the [roboflow](https://roboflow.com/) website, which is a great tool for perfoming dataset augmentation and merging datasets with differents annotations. In this I simply loaded the entire dataset and requested to have all the images in the training folder with no augmentation.
+Since I was able to load models from th web I alsot rained a model to classify dogs and cats in order to show the felxibility of this node. The model that I trained can be found at the [link](https://github.com/AlessandroAvi/Node_red_tfjs_classification/tree/main/Saved_model). In this case the dataset that I used is downloaded from [here](https://www.kaggle.com/karakaggle/kaggle-cat-vs-dog-dataset) and I reduced its size to a total of 10000 images.
 
 
 ### Create and train a model for the image classification
@@ -51,12 +52,14 @@ In the file the conversion is performed in just one line, where you have to spec
 
 ### Deploy the model in the node-red custom node
 In order to deploy the model in the node it's enough to load it in a GitHub repository and at runtime specify the link in the informations of the custom node. Another possibility is to load the json file locally in a folder in the laprop and specify the path to that file. 
-Note that in this case it has been decided to use the model.json loaded on this GitHub repository, and it's necessary to give to the model the raw link to the file. In the case of the model for the mask/no mask classification the link is the following [link to the model](https://github.com/AlessandroAvi/Node_red_tfjs_classification/tree/main/Saved_model). 
+Note that in this case it has been decided to use the model.json loaded on this GitHub repository, and it's necessary to give to the model the raw link to the file. In the case of the model for the mask/no mask classification the link is the following [link to the model](https://raw.githubusercontent.com/AlessandroAvi/Node_red_tfjs_classification/main/Saved_model/Mask_classificator/converted_model/model.json). 
+
+<img src="https://github.com/AlessandroAvi/Node_red_tfjs_classification/Img/install.gif" alt="Installation of the node" width="500" height="600">
 
 ### Install the node and run it
 In order to install the custom node in node-red and run it only two commands from the terminal are required.
 Open the terminal and move inside the folder of the custom node. Here type `yalc publish`.
-Then, again in the terminal, move in the folder in which nide-red is installed (in windows installation it shoudl be: User/NameOfUser/.node-red, on ubuntu it should be: cd ~/.node-red/ ) and here type the command `yalc add name-of-the-node`. In this case the name of the node is `node-red-contrib-tfjs-my_node`.
+Then, again in the terminal, move in the folder in which nide-red is installed (in windows installation it should be: User/NameOfUser/.node-red, on ubuntu it should be: cd ~/.node-red/ ) and here type the command `yalc add name-of-the-node`. In this case the name of the node is `node-red-contrib-tfjs-my_node`.
 Once done this it's enough to run the node-red command, insert the node in the flow, connect it to a debug node and an inert image node and give to it the image that youw ant to classify.
 NOTE: if at the first try of prediction an error appears in the debug tab, simply remove the node, deploy everything, re insert the node and deploy again averything. This procedure works almost every time.
 

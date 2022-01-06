@@ -54,7 +54,7 @@ In the file the conversion is performed in just one line, where you have to spec
 In order to deploy the model in the node it's enough to load it in a GitHub repository and at runtime specify the link in the informations of the custom node. Another possibility is to load the json file locally in a folder in the laprop and specify the path to that file. 
 Note that in this case it has been decided to use the model.json loaded on this GitHub repository, and it's necessary to give to the model the raw link to the file. In the case of the model for the mask/no mask classification the link is the following [link to the model](https://raw.githubusercontent.com/AlessandroAvi/Node_red_tfjs_classification/main/Saved_model/Mask_classificator/converted_model/model.json). 
 
-<img src="https://github.com/AlessandroAvi/Node_red_tfjs_classification/blob/main/Img/install.gif" alt="Installation of the node" width="1000" height="500">
+<img src="https://github.com/AlessandroAvi/Node_red_tfjs_classification/blob/main/Img/install.gif" alt="Installation of the node" width="1000" height="300">
 
 ### Install the node and run it
 In order to install the custom node in node-red and run it only two commands from the terminal are required.

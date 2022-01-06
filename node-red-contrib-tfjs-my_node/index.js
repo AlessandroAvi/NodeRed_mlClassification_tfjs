@@ -12,7 +12,7 @@ module.exports = function(RED) {
 
     // Function definition for loading the model
     async function loadModel (config, node) {
-        node.model = await tfutil.loadModel(config.modelUrl, config.fromHub); 
+        node.model = await tfutil.loadModel(config.modelUrl); 
     }
 
 
@@ -32,8 +32,6 @@ module.exports = function(RED) {
           
           // preprocess the incoming image into a tensor
           const inputTensor = tfutil.processInput(msg.payload);   
-          
-
 
           console.log(`*** Beginning prediction`); // Write on terminal
     
@@ -41,16 +39,9 @@ module.exports = function(RED) {
           const result = node.model
             .executeAsync(inputTensor)    // executes prediction, inputTensor is the image
             .then(prediction => {
-              //msg.payload = tfutil.processOutput(prediction, height, width);    // transforms the precition in readable json format
-              msg.payload = prediction.arraySync()
-
-              node.send(msg);     // send the prediction out on node redS
-              node.send(msg.payload);     // send the prediction out on node redS
-
-              console.log(prediction); // Write on terminal
-              console.log(msg); // Write on terminal
-              console.log(msg.payload ); // Write on terminal
-              
+              msg.payload = tfutil.processOutput(prediction);    // transforms the precition in readable json format              
+            
+              node.send(msg.payload);
             });
 
           console.log(`***** Finished prediction *****`); // Write on terminal

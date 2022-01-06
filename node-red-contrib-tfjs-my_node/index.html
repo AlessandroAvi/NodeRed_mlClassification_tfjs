@@ -18,8 +18,9 @@
     RED.nodes.registerType('tfjs-my_node-node', {
         category: 'machine learning',
         defaults: {
-        name: { value: 'tfjs my_node' }
-        },
+            name: { value: 'tfjs my_node' },
+            modelUrl: { value: 'https://raw.githubusercontent.com/AlessandroAvi/Node_red_tfjs_classification/main/Saved_model/converted_model/model.json' }
+        },  
         inputs: 1,
         outputs: 1,
         paletteLabel: 'tfjs my_node',

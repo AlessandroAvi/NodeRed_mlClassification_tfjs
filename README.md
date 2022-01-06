@@ -6,6 +6,7 @@ The entire project has been developed on a virtual machine that mount a ubuntu O
 The project result is the following:
 
 <img src="https://github.com/AlessandroAvi/Node_red_tfjs_classification/blob/main/Img/example.gif" alt="My Project GIF" width="1000" height="500">
+
 ![Prediction](https://github.com/AlessandroAvi/Node_red_tfjs_classification/blob/main/Img/prediction.jpg)
 
 

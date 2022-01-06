@@ -5,7 +5,9 @@ The entire project has been developed on a virtual machine that mount a ubuntu O
 
 The project result is the following:
 
-<img src="https://github.com/AlessandroAvi/Node_red_tfjs_classification/blob/main/Img/example.gif" alt="My Project GIF" width="2000" height="1000">
+<img src="https://github.com/AlessandroAvi/Node_red_tfjs_classification/blob/main/Img/example.gif" alt="My Project GIF" width="1000" height="500">
+![Prediction](https://github.com/AlessandroAvi/Node_red_tfjs_classification/blob/main/Img/prediction.jpg)
+
 
 ## Project procedure
 The project is about the application of machine learning on node-red, a flow based developement tool for visual programming. The aim of the project was to develope a node that once taken an image in input is able to classify it and define if the image contains a mask or not. The idea comes from [this tutorial](https://developer.ibm.com/tutorials/building-a-machine-learning-node-for-node-red-using-tensorflowjs/) developed by Paul Van Eck at IBM, whom also posted a video tutorial explaining the project [here](https://www.youtube.com/watch?v=bOdlPwWej98&t=0s).  

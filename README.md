@@ -12,12 +12,14 @@ Here is a closer image of the prediction:
 ![Prediction](https://github.com/AlessandroAvi/Node_red_tfjs_classification/blob/main/Img/prediction.jpg)
 
 
-## PROJECT PROCEDURE
+
+
+# HOW TO REPLCIATE THE PROJECT
 The project is about the application of machine learning on node-red, a flow based developement tool for visual programming. The aim of the project was to develope a node that once taken an image in input is able to classify it and define if the image contains a mask or not. The idea comes from [this tutorial](https://developer.ibm.com/tutorials/building-a-machine-learning-node-for-node-red-using-tensorflowjs/) developed by Paul Van Eck at IBM, whom also posted a video tutorial explaining the project [here](https://www.youtube.com/watch?v=bOdlPwWej98&t=0s).  
 My project exploits the same idea but applies it on a smaller classification problem.
 
 The project work flow is:
-- Install the necessary packages and libraries
+- Set up the pc installing node.js, node-red and all the packages
 - Create the custom node for the node-red environment
 - Find/create a dataset for the model training
 - Create and train a model for the image classification
@@ -26,43 +28,59 @@ The project work flow is:
 - Install the node and run it
 
 ### Install the necessary packages and libraries
-For the project is required the installation of an IDE, node.js, node-red and some packages and libraries.
 For the installation of node.js (see [here](https://nodered.org/docs/getting-started/windows#1-install-nodejs) ) it is recommended to use the version 14.x from their official [download page](https://nodejs.org/en/) .
+
 For the installation of node-red it should be enough to use the commands in the terminal `npm install -g --unsafe-perm node-red`
-For the correct usage of my node and the node developed in the tutorial is also necessary to install soem node-red packages. I had lots of problems installing these because of inexperience, so I suggest following these steps.
-Firstly install the package  @tensorflow/tfjs-node, from which other two package depend. To do this open the terminal and navigate inside the node-red folder (in windows installation it should be: User/NameOfUser/.node-red, on ubuntu it should be:  ~/.node-red/ ) and run here the installing command by typing `npm install @tensorflow/tfjs-node` or use the `yarn` command as shown in [this page](https://www.npmjs.com/package/@tensorflow/tfjs-node). 
-After this it should be easy to install the packages `node-red-contrib-tf-function` and `node-red-contrib-tf-model`. This time I isntalled those directly inside node-red. So type `node-red` in the terminal, open the node-red page on the browser an in the top right go to ...->...->... and in install enter the names of the two packages and install them. Additionally in here add the package `qualcosa-per-immagini`,  `node-red-contrib-browser-utils`.
+
+After this it's required to insall some additional node-red packages. One of the most important is the installation of @tensorflow/tfjs-node, from which other packages will depend. In order to install it in windows simply use the explorer and move in the folder:  User/NameOfUser/.node-red. Here press CTRL+LEFT MOUSE and open the power shell. Now type the commadn `npm install @tensorflow/tfjs-node`, which will install the entire package of tfjs. (For ubuntu open the terminal, move in the same folder with `cd ~/.node-red` and type the installation command). For more info of the installation of @tensorflow/tfjs-node go [here](https://www.npmjs.com/package/@tensorflow/tfjs-node). 
+
+After the installation of tfjs other packages are required for the correct usage of the custom node. In order to install these simply open node red->top right corner open setting tab->Manage palette->Install, and here install these packages:
+- `node-red-contrib-tf-function`
+- `node-red-contrib-tf-model`
+- `node-red-contrib-browser-utils`
+- `node-red-contrib-image-tools`
+
+NOTE: I had problems installing @tensorflow/tfjs-node on Windows, for some reason some files are missing and the packages tf-function and tf-model are not usable. I resolved the problem by installing the node on an virtual machine running Ubuntu. 
 
 ### Create the custom node for the node-red environment
-For the creation of teh node follow the tutorial by IBM, that I also followed step by step. I later applied minor differences since my project uses classifications and not detection of objects with bounding boxes.
+For the creation of the node follow the tutorial by IBM, that I also followed step by step. I later applied minor differences since my project uses classifications and not detection of objects with bounding boxes.
 
 ### Find/create a dataset for the model training
-In my case I had to find a dataset that contains lots of images of people with and without masks. At the beginning I created a small dataset of 60 images using my webcam just for becoming confident with the training of the model and perform fast trainings. Later I found on the internet these two dataset that I merged together. [Dataset_1](https://www.kaggle.com/omkargurav/face-mask-dataset) - [Dataset_2](https://www.kaggle.com/dhruvmak/face-mask-detection). 
-In order to be able to use these images in the training I need to have all the images resized to a shape of 224x224 pixels. I did this using the [roboflow](https://roboflow.com/) website, which is a great tool for perfoming dataset augmentation and merging datasets with differents annotations. In this I simply loaded the entire dataset and requested to have all the images in the training folder with no augmentation.
-Since I was able to load models from th web I alsot rained a model to classify dogs and cats in order to show the felxibility of this node. The model that I trained can be found at the [link](https://github.com/AlessandroAvi/Node_red_tfjs_classification/tree/main/Saved_model/Dog_cat_classificator). In this case the dataset that I used is downloaded from [here](https://www.kaggle.com/karakaggle/kaggle-cat-vs-dog-dataset) and I reduced its size to a total of 10000 images.
+In my case I had to find a dataset that contains lots of images of people with and without masks. At the beginning I created a small dataset of 60 images using my webcam just for becoming confident with the training of the model and perform fast trainings. Later I found on the internet these two dataset that I merged together. 
+
+[Dataset_1](https://www.kaggle.com/omkargurav/face-mask-dataset)   -   [Dataset_2](https://www.kaggle.com/dhruvmak/face-mask-detection)
+
+In order to be able to use these datasets in the training I need to have all the images resized to a shape of 224x224 pixels. I did this using the [roboflow](https://roboflow.com/) website, which is a great tool for perfoming dataset augmentation and merging datasets with differents annotations. Here I simply loaded the entire dataset (max 10000 images for the free trial) and requested to have all the images resized. In this case I didn't applied any augmentation.
+
+Since I was able to load models from the web I also trained a model to classify dogs and cats. This allows me to show the flexibility of this custom node and its ease of use. The model that I trained can be found at the [link](https://github.com/AlessandroAvi/Node_red_tfjs_classification/tree/main/Saved_model/Dog_cat_classificator). In this case the dataset that I used is downloaded from [here](https://www.kaggle.com/karakaggle/kaggle-cat-vs-dog-dataset) and I reduced its size to a total of 10000 images beacuse of the free trial of roboflow.
 
 ### Create and train a model for the image classification
-For the training of the model I used a file on GoogleCollab that is available in this repository under the name `Training_classification_mask.ipynb`. 
+For the training of the model I used a Jupyter notebook that I loaded on GoogleCollab. The file is available [here](https://github.com/AlessandroAvi/Node_red_tfjs_classification/blob/main/Training_classification_mask.ipynb). 
+
 At the beginning of the file all the libraries are installed, then the user is requested to give access to its google drive. This is required because the dataset for the model should be loaded on there for ease of use. It's important to specify the correct path to the dataset in the line that says `data_root = 'gdrive/MyDrive/...`. After that the dataset is loaded and parsed in train/test portions and the classes are detected. The classes on which the model will train are simply the names of the folder inside the dataset directory. 
-Then the model structure is defined, in this projecy I load a pre built model from tfhub which is absed on MobileNet_v2. After this the model is trained and later saved locally on the GoogleCollab runtime.
+
+Then the model structure is defined, in this projecy I load a pre built model from tfhub which is based on MobileNet_v2. After this the model is trained and later saved locally on the GoogleCollab runtime.
 The following section of the notebook contains the testing of the model which is performed on the entire portion of the dataset dedicated to the testing. The results of the testing can be seen in both a dataframe and in a grid of images.
 
 ### Convert the tensorflow model in a js friendly format
-In order to use correctly the model on node-red it's necessary to save it in a json format. In order to do so in the notebok it's necessary to install the tool from tensorflow called [models converter](https://github.com/tensorflow/tfjs/tree/master/tfjs-converter). It's also possible to install it locally on the laptop and later run it throught the terminal bot for ease of use everything can be done in the google collab notebook. 
-In the file the conversion is performed in just one line, where you have to specify the original type of model, the desired converted file and some other additional parameters. In this case the original file is a `tf_saved_model` and the formal that generates a json model is `tfjs_graph_model`. The last section of the google collab file download the entire folder in which is saved the json model and the model.pb file. 
+In order to use correctly the model on node-red it's necessary to save it in a json format. For doing so it's possible to use a tensorflow tool called [models converter](https://github.com/tensorflow/tfjs/tree/master/tfjs-converter). The tool can be installed locally on the laptop and used from the terminal or it can be installed directly in the GoogleCollab file and run from there. In this cane I decided to run it in the Notebook.
+
+The conversion is performed in just one line, where you have to specify the original type of model, the desired converted file and some other additional parameters. In this case the original file is a `tf_saved_model` and the output file, which is a json, is `tfjs_graph_model`. The last section of the google collab file download the entire folder in which is saved the json model and the model.pb file. 
 
 ### Deploy the model in the node-red custom node
-In order to deploy the model in the node it's enough to load it in a GitHub repository and at runtime specify the link in the informations of the custom node. Another possibility is to load the json file locally in a folder in the laprop and specify the path to that file. 
-Note that in this case it has been decided to use the model.json loaded on this GitHub repository, and it's necessary to give to the model the raw link to the file. In the case of the model for the mask/no mask classification the link is the following [link to the model](https://raw.githubusercontent.com/AlessandroAvi/Node_red_tfjs_classification/main/Saved_model/Mask_classificator/converted_model/model.json). 
+In order to deploy the model in the node it's enough to load it in a GitHub repository and at runtime, inside the node informations on node-red, specify the link of the custom node. Another possibility is to load the json file locally in a folder in the laptop and specify the path to that file. 
+
+For this project I used the model that I previously trained and loaded in this repo. Note that in order to run it correctly and not obtain error it's necessary to select the RAW version of the model.json. In my case the RAW model can be selected from [this link](https://github.com/AlessandroAvi/Node_red_tfjs_classification/blob/main/Saved_model/Mask_classificator/converted_model/model.json) just by selecting the RAW option. (The correct link is the following: [link to the model](https://raw.githubusercontent.com/AlessandroAvi/Node_red_tfjs_classification/main/Saved_model/Mask_classificator/converted_model/model.json)).
 
 ### Install the node and run it
-In order to install the custom node in node-red and run it only two commands from the terminal are required.
+In order to install the custom node in node-red and run it, only two commands from the terminal are required.
+
 Open the terminal and move inside the folder of the custom node. Here type `yalc publish`.
-Then, again in the terminal, move in the folder in which nide-red is installed (in windows installation it should be: User/NameOfUser/.node-red, on ubuntu it should be: cd ~/.node-red/ ) and here type the command `yalc add name-of-the-node`. In this case the name of the node is `node-red-contrib-tfjs-my_node`.
-Once done this it's enough to run the node-red command, insert the node in the flow, connect it to a debug node and an inert image node and give to it the image that youw ant to classify.
+
+Then, again in the terminal, move in the folder in which node-red is installed (in windows installation it should be: User/NameOfUser/.node-red, on Ubuntu it should be: cd ~/.node-red/ ) and here type the command `yalc add name-of-the-node`. In this case the name of the node is `node-red-contrib-tfjs-my_node`.
+Once done this it's enough to run the node-red command, insert the node in the flow. Connect its output to a debug node and its input to the file inject node (additionally add the image viewr node).
 
 <img src="https://github.com/AlessandroAvi/Node_red_tfjs_classification/blob/main/Img/install.gif" alt="Installation of the node" width="1000" height="300">
 
-
-NOTE: if at the first try of prediction an error appears in the debug tab, simply remove the node, deploy everything, re insert the node and deploy again averything. This procedure works almost every time.
+NOTE: if at the first try of prediction an error appears in the debug tab, simply remove the node, deploy everything, re-insert the node and deploy again everything. This procedure works almost every time.
 

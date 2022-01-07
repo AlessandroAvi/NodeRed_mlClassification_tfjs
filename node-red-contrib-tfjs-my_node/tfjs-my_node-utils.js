@@ -13,9 +13,11 @@ const loadModel = async function (modelUrl) {
 }
 
 
+
 // Takes an image as input, transofrms it into a Tensor with an added dimension
 // and then normalizes it and saves the values as float
 const processInput = function (imageBuffer) {
+
   console.log(`**** Begin input preprocess`);
 
   // Resize the image in 224x224 image
@@ -38,47 +40,47 @@ return integerTensor;
 // finds the class with highest prediction, then displays the prediction in
 // the debug tab
 const processOutput = function(prediction){
-     
+
   prediction_arr = prediction.dataSync();
+  num_classes = labels.length;
 
   // Compute which is the highest score
   let max_val = 0;
   let detection = 0;
-  if(prediction_arr[0] > prediction_arr[1]){
-    detection = 1;
-    max_val = prediction_arr[0];
-  }else{
-    detection = 2;
-    max_val = prediction_arr[1];
-  }
 
-  // If percentage is not close to 80 propapbly there is no person
-  pred_text = 'I\'m not sure this image contains a person';
-
-  if(max_val > 0.8){
-    if(detection == 1){
-      pred_text = 'The person IS wearing a mask';
-    }else if(detection == 2){
-      pred_text = 'The person IS NOT wearing a mask'; 
+  for(let i=0; i<num_classes; i++){
+    if(prediction_arr[i] > max_val){
+      detection = i;
+      max_val = prediction_arr[i];
     }
   }
 
-  shape_tns  = prediction_arr.shape;
-
+  note_msg = "WARN: prediction is lower than 70 %";
   console.log('***** Creating JSON output');
+
   const objects = [];
 
-  objects.push({
-    with_mask: Math.round(prediction_arr[0]*1000)/1000,
-    without_mask: Math.round(prediction_arr[1]*1000)/1000,
-    prediction: pred_text,
-    shape_tns : shape_tns
-  });
+  if(max_val < 0.7){
+
+    objects.push({
+      available_labels : labels,
+      label_predicted : labels[detection],
+      score : Math.round(max_val*100)/100,
+      note : note_msg
+    });
+
+  }else{
+
+    objects.push({
+      available_labels : labels,
+      label_predicted : labels[detection],
+      score : Math.round(max_val*100)/100
+    });
+
+  }
 
  return objects;
 }
-
-
 
 
 

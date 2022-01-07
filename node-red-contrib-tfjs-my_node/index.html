@@ -2,24 +2,25 @@
 
 <!-- Define the node edit dialog in node red -->
 <script type="text/html" data-template-name="tfjs-my_node-node">
-  <div class="form-row">
-      <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
-      <input type="text" id="node-input-name" placeholder="Name">
-  </div>
-  <div class="form-row">
-      <label for="node-input-modelUrl"><i class="fa fa-globe"></i> Model Url</label>
-      <input type="text" id="node-input-modelUrl" placeholder="https://modelurl/model.json">
-  </div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-modelUrl"><i class="fa fa-globe"></i> Model Url</label>
+        <input type="text" id="node-input-modelUrl" placeholder="https://modelurl/model.json">
+    </div>
 </script>
-
-
+  
+  
+  
 <!-- Script tag for registwring the node with the editor -->
 <script type="text/javascript">
     RED.nodes.registerType('tfjs-my_node-node', {
         category: 'machine learning',
         defaults: {
             name: { value: 'tfjs my_node' },
-            modelUrl: { value: 'https://raw.githubusercontent.com/AlessandroAvi/Node_red_tfjs_classification/main/Saved_model/converted_model/model.json' }
+            modelUrl: { value: 'https://raw.githubusercontent.com/AlessandroAvi/Node_red_tfjs_classification/main/Saved_model/Mask_classificator/converted_model/model.json' }
         },  
         inputs: 1,
         outputs: 1,
@@ -30,8 +31,8 @@
         }
     });
 </script>
-
-
+  
+  
 <!-- Here is defined the info message for the node -->
 <script type="text/html" data-help-name="tfjs-my_node-node">
     <p>A node based on TensorfFlow.js to run classifications on images for mask detections.</p>

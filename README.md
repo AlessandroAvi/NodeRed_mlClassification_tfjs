@@ -42,7 +42,7 @@ After the installation of tfjs other packages are required for the correct usage
 
 NOTE: I had problems installing @tensorflow/tfjs-node on Windows, for some reason some files are missing and the packages tf-function and tf-model are not working. I resolved the problem by installing the node on a virtual machine running Ubuntu. 
 
-## Create the custom node for the node-red environment
+## CREATE THE CUSTOM NODE
 For the creation of the node follow the [tutorial](https://www.youtube.com/watch?v=bOdlPwWej98&t=0s) by IBM, that I also followed step by step. I later applied minor differences since my project uses classifications and not detection of objects with bounding boxes.
 
 ## FIND/CREATE A DATASET FOR THE MODEL TRAINING

@@ -1,5 +1,4 @@
 const tfjs = require('@tensorflow/tfjs-node');
-const labels = require('./labels.js');
 
 
 
@@ -13,11 +12,9 @@ const loadModel = async function (modelUrl) {
 }
 
 
-
 // Takes an image as input, transofrms it into a Tensor with an added dimension
 // and then normalizes it and saves the values as float
 const processInput = function (imageBuffer) {
-
   console.log(`**** Begin input preprocess`);
 
   // Resize the image in 224x224 image
@@ -39,10 +36,25 @@ return integerTensor;
 // Takes the prediction obtained from the model, extract the values and
 // finds the class with highest prediction, then displays the prediction in
 // the debug tab
-const processOutput = function(prediction){
-
+const processOutput = function(prediction, config){
+     
   prediction_arr = prediction.dataSync();
-  num_classes = labels.length;
+
+  num_classes = parseInt(config.num_classes);
+
+  labels = [];
+
+  // very ugly code, couldn't manage to make it change shape dinamically
+  if(num_classes == 1){
+    labels = [config.class1];
+  }else if(num_classes == 2){
+    labels = [config.class1, config.class2];
+  }else if(num_classes == 3){
+    labels = [config.class1, config.class2, config.class3];
+  }else if(num_classes == 4){
+    labels = [config.class1, config.class2, config.class3, config.class4 ];
+  }
+
 
   // Compute which is the highest score
   let max_val = 0;
@@ -56,31 +68,38 @@ const processOutput = function(prediction){
   }
 
   note_msg = "WARN: prediction is lower than 70 %";
-  console.log('***** Creating JSON output');
 
+  if(num_classes == 0){
+    note_msg = "WARN: you have to specify a number of classes";
+  }
+
+  console.log('***** Creating JSON output');
   const objects = [];
 
-  if(max_val < 0.7){
 
+
+  if(max_val < 0.7){
     objects.push({
-      available_labels : labels,
-      label_predicted : labels[detection],
+      number_of_classes : num_classes,
+      available_classes : labels,
+      class_predicted : labels[detection],
       score : Math.round(max_val*100)/100,
       note : note_msg
     });
-
   }else{
-
     objects.push({
+      number_of_classes : num_classes,
       available_labels : labels,
       label_predicted : labels[detection],
       score : Math.round(max_val*100)/100
     });
-
   }
+
 
  return objects;
 }
+
+
 
 
 
